@@ -14,6 +14,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_MovieTime)
         setContentView(R.layout.activity_login)
 
         auth = FirebaseAuth.getInstance()
@@ -28,14 +29,14 @@ class LoginActivity : AppCompatActivity() {
     private fun login() {
         loginButton.setOnClickListener {
             // validation for EditText
-            if (TextUtils.isEmpty(emailInput.text.toString())) {
+            if (TextUtils.isEmpty(emailInput.text.toString().trim())) {
                 emailInput.setError("Please enter email!")
                 return@setOnClickListener
-            } else if (TextUtils.isEmpty(passwordInput.text.toString())) {
+            } else if (TextUtils.isEmpty(passwordInput.text.toString().trim())) {
                 passwordInput.setError("Please enter password!")
                 return@setOnClickListener
             }
-            auth.signInWithEmailAndPassword(emailInput.text.toString(), passwordInput.text.toString())
+            auth.signInWithEmailAndPassword(emailInput.text.toString(), passwordInput.text.toString().trim())
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
