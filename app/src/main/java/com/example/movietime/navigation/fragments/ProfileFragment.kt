@@ -10,7 +10,6 @@ import com.example.movietime.LoginActivity
 import com.example.movietime.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.navigation_header.*
 
 class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
@@ -27,7 +26,6 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
         emailOut.text = auth.currentUser?.email
-        //emailProfile.text = auth.currentUser?.email
         signOutMethod()
     }
 
