@@ -1,33 +1,42 @@
 {
   "project_info": {
-    "project_number": "1092053613019",
-    "project_id": "movietime-271af",
-    "storage_bucket": "movietime-271af.appspot.com"
+    "project_number": "997542526459",
+    "firebase_url": "https://movie-time-a2e97-default-rtdb.firebaseio.com",
+    "project_id": "movie-time-a2e97",
+    "storage_bucket": "movie-time-a2e97.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092053613019:android:d699937f9de2853435cffe",
+        "mobilesdk_app_id": "1:997542526459:android:abcbf8d6db83e3640edf5e",
         "android_client_info": {
           "package_name": "com.example.movietime"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1092053613019-1qoepdqo3q8mhogtj3vlvvofov883bqa.apps.googleusercontent.com",
+          "client_id": "997542526459-825g7hsbq8ndbo32pp2dcrqgn2lmm6sv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.movietime",
+            "certificate_hash": "84feb0e63fb9c8d9bd9c21f732706dc23de47ea7"
+          }
+        },
+        {
+          "client_id": "997542526459-kbnnpclpkh2ui5cb8rq9dcp52m0rh36o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDzS2uIgttBJbIqQloMgZ0R1ZANZzSHxRo"
+          "current_key": "AIzaSyCWoDOpzP2bF1xg39I3Y29gIR09d1Zjzy0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1092053613019-1qoepdqo3q8mhogtj3vlvvofov883bqa.apps.googleusercontent.com",
+              "client_id": "997542526459-kbnnpclpkh2ui5cb8rq9dcp52m0rh36o.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

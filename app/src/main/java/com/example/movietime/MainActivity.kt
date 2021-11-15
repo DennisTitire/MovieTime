@@ -10,10 +10,11 @@ import com.example.movietime.navigation.fragments.HomeFragment
 import com.example.movietime.navigation.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var auth: FirebaseAuth
+    lateinit var firebaseAuth: FirebaseAuth
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_MovieTime)
         setContentView(R.layout.activity_main)
 
-        auth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

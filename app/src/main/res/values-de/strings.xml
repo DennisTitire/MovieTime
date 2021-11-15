@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Movie Time</string>
     <string name="title_activity_main">MainActivity</string>
@@ -16,17 +17,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="movie_time">Movie Time</string>
-    <string name="enter_email">Enter email</string>
-    <string name="enter_password">Enter password</string>
-    <string name="login">LogIn</string>
-    <string name="signin">SignIn</string>
-    <string name="registration">User registration</string>
-    <string name="enter_username">Enter username</string>
-    <string name="register">Register</string>
-    <string name="account_username_is">Account username is:</string>
-    <string name="account_email_is">Account email is:</string>
-    <string name="logout">Logout</string>
+    <string name="enter_email">E-mail invoeren</string>
+    <string name="enter_password">Wachtwoord invoeren</string>
+    <string name="login">inloggen</string>
+    <string name="signin">Aanmelden</string>
+    <string name="registration">gebruikersregistratie</string>
+    <string name="enter_username">gebruikersnaam invoeren</string>
+    <string name="register">registreren</string>
+    <string name="account_username_is">account gebruikersnaam is:</string>
+    <string name="account_email_is">de e-mail van de rekening is:</string>
+    <string name="logout">uitloggen</string>
     <string name="logo_image">logo image</string>
-    <string name="enter_user_name">Enter user name</string>
-    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_user_name">Voer gebruikersnaam in</string>
+    <string name="enter_phone_number">Voer telefoonnummer in</string>
 </resources>

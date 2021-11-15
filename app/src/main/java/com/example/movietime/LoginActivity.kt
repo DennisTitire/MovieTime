@@ -10,33 +10,37 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var  auth: FirebaseAuth
+    lateinit var  firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_MovieTime)
         setContentView(R.layout.activity_login)
 
-        auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        checkLogInUser()
+        login()
+    }
+
+    private fun checkLogInUser() {
+        if (firebaseAuth.currentUser != null) {
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             finish()
         }
-
-        login()
     }
 
     private fun login() {
         loginButton.setOnClickListener {
             // validation for EditText
-            if (TextUtils.isEmpty(emailInput.text.toString().trim())) {
-                emailInput.setError("Please enter email!")
+            if (TextUtils.isEmpty(emailInputLogIn.text.toString().trim())) {
+                emailInputLogIn.setError("Please enter email!")
                 return@setOnClickListener
-            } else if (TextUtils.isEmpty(passwordInput.text.toString().trim())) {
-                passwordInput.setError("Please enter password!")
+            } else if (TextUtils.isEmpty(passwordInputLogIn.text.toString().trim())) {
+                passwordInputLogIn.setError("Please enter password!")
                 return@setOnClickListener
             }
-            auth.signInWithEmailAndPassword(emailInput.text.toString(), passwordInput.text.toString().trim())
+            firebaseAuth.signInWithEmailAndPassword(emailInputLogIn.text.toString(), passwordInputLogIn.text.toString().trim())
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
@@ -47,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
         }
-        signinButton.setOnClickListener {
+        signInButton.setOnClickListener {
             startActivity(Intent(this@LoginActivity, RegistrationActivity::class.java))
         }
     }

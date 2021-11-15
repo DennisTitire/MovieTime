@@ -10,8 +10,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="X"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:onClick="xButton"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/myBlack"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/staatliches_regular"
         android:text="@string/registration"
         android:textColor="@color/black"
@@ -26,10 +36,44 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/emailInput"
+            android:id="@+id/userNameRegistration"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="10dp"
+            android:autofillHints="name"
+            android:background="@drawable/custom_edit_text"
+            android:drawableStart="@drawable/custom_person_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/staatliches_regular"
+            android:hint="@string/enter_user_name"
+            android:inputType="textPersonName"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/phoneUserRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="Phone number"
+            android:background="@drawable/custom_edit_text"
+            android:drawableStart="@drawable/custom_phone_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/staatliches_regular"
+            android:hint="@string/enter_phone_number"
+            android:inputType="phone"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/emailInputRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:autofillHints="emailAddress"
             android:background="@drawable/custom_edit_text"
             android:drawableStart="@drawable/custom_email_icon"
@@ -43,12 +87,11 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/passwordInputRegistration"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:autofillHints="password"
             android:background="@drawable/custom_edit_text"
-
             android:drawableStart="@drawable/custom_lock_icon"
             android:drawablePadding="10dp"
             android:fontFamily="@font/staatliches_regular"
@@ -77,6 +120,7 @@
             android:fontFamily="@font/staatliches_regular"
             android:text="@string/register"
             android:textSize="20sp" />
+
 
     </LinearLayout>
 
