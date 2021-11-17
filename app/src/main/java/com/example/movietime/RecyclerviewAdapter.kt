@@ -17,12 +17,7 @@ class RecyclerviewAdapter(private val listData: List<DataMovies>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerviewAdapter.MyViewHolder, position: Int) {
-        holder.titleTextView.text = listData.get(position).title
-        holder.genreTextView.text = listData.get(position).genre
-        holder.directorTextView.text = listData.get(position).director
-        holder.descriptionTextView.text = listData.get(position).description
-        val imageList: String = listData.get(position).img
-        Picasso.get().load(imageList).into(holder.imageImageView)
+
     }
 
     override fun getItemCount(): Int {
@@ -30,10 +25,6 @@ class RecyclerviewAdapter(private val listData: List<DataMovies>) :
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var titleTextView: TextView = view.findViewById(R.id.itemTitle)
-        var genreTextView: TextView = view.findViewById(R.id.itemGenre)
-        var directorTextView: TextView = view.findViewById(R.id.itemDirector)
-        var descriptionTextView: TextView = view.findViewById(R.id.itemDescription)
-        var imageImageView: ImageView = view.findViewById(R.id.itemImage)
+
     }
 }
