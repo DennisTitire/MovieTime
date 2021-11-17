@@ -3,7 +3,11 @@ package com.example.movietime
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
+import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import com.example.movietime.dto.DataUsers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -11,20 +15,18 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlin.math.log
 
 class RegistrationActivity : AppCompatActivity() {
-    lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_MovieTime)
         setContentView(R.layout.activity_registration)
 
-        auth = FirebaseAuth.getInstance()
-        val database = Firebase.database
-        val myRef = database.getReference("message")
-
-        myRef.setValue("Hello, World!")
+        firebaseAuth = FirebaseAuth.getInstance()
         register()
     }
 
@@ -32,22 +34,42 @@ class RegistrationActivity : AppCompatActivity() {
         // handle the button click -> calling the firebase API
         registerButton.setOnClickListener {
             // validation for EditText
-            if (TextUtils.isEmpty(emailInput.text.toString())) {
-                emailInput.setError("Please enter your email")
+            if (TextUtils.isEmpty(emailInputRegistration.text.toString())) {
+                emailInputRegistration.setError("Please enter your email")
                 return@setOnClickListener
-            } else if (TextUtils.isEmpty(passwordInput.text.toString())) {
-                passwordInput.setError("Please enter your password")
+            } else if (TextUtils.isEmpty(passwordInputRegistration.text.toString())) {
+                passwordInputRegistration.setError("Please enter your password")
                 return@setOnClickListener
             }
-            auth.createUserWithEmailAndPassword(emailInput.text.toString(), passwordInput.text.toString())
+            progressBarRegistration.visibility = View.VISIBLE
+            firebaseAuth.createUserWithEmailAndPassword(emailInputRegistration.text.toString(), passwordInputRegistration.text.toString())
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
+                        val dataUser = DataUsers(userNameRegistration.text.toString(), emailInputRegistration.text.toString(), phoneUserRegistration.text.toString(), passwordInputRegistration.text.toString())
+                        val uid = firebaseAuth.uid
+                        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+                        databaseReference.child(uid!!).setValue(dataUser).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Toast.makeText(this@RegistrationActivity, "Registration Success with ${emailInputRegistration.text}", Toast.LENGTH_LONG).show()
+                                progressBarRegistration.visibility = View.INVISIBLE
+                                finish()
+                            } else {
+                                Toast.makeText(this@RegistrationActivity, "Registration failed, please try again!", Toast.LENGTH_LONG).show()
+                            }
+                        }
                         Toast.makeText(this@RegistrationActivity, "Registration Success", Toast.LENGTH_LONG).show()
+                        progressBarRegistration.visibility = View.INVISIBLE
                         finish()
                     } else {
                         Toast.makeText(this@RegistrationActivity, "Registration failed, please try again!", Toast.LENGTH_LONG).show()
+                        progressBarRegistration.visibility = View.INVISIBLE
                     }
             }
         }
     }
+
+    fun xButton(view: android.view.View) {
+        onBackPressed()
+    }
+
 }
