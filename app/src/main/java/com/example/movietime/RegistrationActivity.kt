@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.movietime.dto.DataUsers
@@ -40,6 +41,7 @@ class RegistrationActivity : AppCompatActivity() {
                 passwordInputRegistration.setError("Please enter your password")
                 return@setOnClickListener
             }
+            progressBarRegistration.visibility = View.VISIBLE
             firebaseAuth.createUserWithEmailAndPassword(emailInputRegistration.text.toString(), passwordInputRegistration.text.toString())
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
@@ -48,16 +50,19 @@ class RegistrationActivity : AppCompatActivity() {
                         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
                         databaseReference.child(uid!!).setValue(dataUser).addOnCompleteListener {
                             if (it.isSuccessful) {
-                                Toast.makeText(this@RegistrationActivity, "Registration Success", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@RegistrationActivity, "Registration Success with ${emailInputRegistration.text}", Toast.LENGTH_LONG).show()
+                                progressBarRegistration.visibility = View.INVISIBLE
                                 finish()
                             } else {
                                 Toast.makeText(this@RegistrationActivity, "Registration failed, please try again!", Toast.LENGTH_LONG).show()
                             }
                         }
                         Toast.makeText(this@RegistrationActivity, "Registration Success", Toast.LENGTH_LONG).show()
+                        progressBarRegistration.visibility = View.INVISIBLE
                         finish()
                     } else {
                         Toast.makeText(this@RegistrationActivity, "Registration failed, please try again!", Toast.LENGTH_LONG).show()
+                        progressBarRegistration.visibility = View.INVISIBLE
                     }
             }
         }

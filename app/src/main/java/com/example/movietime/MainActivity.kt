@@ -24,12 +24,20 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        initNavigationDrawer()
+        navigationItemSelected()
+        changeFragment(HomeFragment(), "Home")
+
+    }
+
+    private fun initNavigationDrawer() {
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        changeFragment(HomeFragment(), "Home")
+    }
 
+    private fun navigationItemSelected() {
         navigationView.setNavigationItemSelectedListener {
             // it.isChecked = true
             when (it.itemId) {
@@ -40,15 +48,6 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawers()
             true
         }
-
-    }
-
-
-    private fun changeFragment(fragment: Fragment, title: String): String {
-        val fragmentManager = supportFragmentManager.beginTransaction()
-        fragmentManager.replace(R.id.frameLayout, fragment).commit()
-        supportActionBar?.title = title
-        return title
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -56,6 +55,13 @@ class MainActivity : AppCompatActivity() {
             return true
 
         return onOptionsItemSelected(item)
+    }
+
+    private fun changeFragment(fragment: Fragment, title: String): String {
+        val fragmentManager = supportFragmentManager.beginTransaction()
+        fragmentManager.replace(R.id.frameLayout, fragment).commit()
+        supportActionBar?.title = title
+        return title
     }
 
 
