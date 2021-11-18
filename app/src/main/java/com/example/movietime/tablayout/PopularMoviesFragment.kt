@@ -1,4 +1,4 @@
-package com.example.movietime.navigation.fragments
+package com.example.movietime.tablayout
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,11 +12,14 @@ import com.example.movietime.MoviesAdapter
 import com.example.movietime.R
 import com.example.movietime.dto.DataMovies
 import com.example.movietime.retrofit.MovieRepository
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.fragment_popular_movies.*
 
-class HomeFragment : Fragment() {
+class PopularMoviesFragment: Fragment() {
 
     private lateinit var popularMovies: RecyclerView
     private lateinit var popularMoviesAdapter: MoviesAdapter
+    private lateinit var pagerAdapter: PagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,6 +32,12 @@ class HomeFragment : Fragment() {
         )
         return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //setUpTabBar()
+    }
+
 
     private fun initRecyclerview(view: View) {
         popularMovies = view.findViewById(R.id.recyclerView)
@@ -45,5 +54,17 @@ class HomeFragment : Fragment() {
         Toast.makeText(context, "Please check your internet connection!", Toast.LENGTH_LONG).show()
     }
 
+    private fun setUpTabBar() {
+        pagerAdapter = PagerAdapter(parentFragmentManager, lifecycle)
+        viewPager.adapter = pagerAdapter
+
+        TabLayoutMediator(tabLayout, viewPager, TabLayoutMediator.TabConfigurationStrategy{tab, position ->
+            when(position) {
+                0 -> tab.text = "Popular"
+                1 -> tab.text = "Top Rated"
+                else -> tab.text = "Upcoming"
+            }
+        }).attach()
+    }
 
 }

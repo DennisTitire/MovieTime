@@ -6,11 +6,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.movietime.navigation.fragments.FavouriteFragment
-import com.example.movietime.navigation.fragments.HomeFragment
 import com.example.movietime.navigation.fragments.ProfileFragment
+import com.example.movietime.tablayout.PopularMoviesFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,10 +22,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         firebaseAuth = FirebaseAuth.getInstance()
-
         initNavigationDrawer()
         navigationItemSelected()
-        changeFragment(HomeFragment(), "Home")
+        //setUpTabBar()
+        changeFragment(PopularMoviesFragment(), "Home")
 
     }
 
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             // it.isChecked = true
             when (it.itemId) {
-                R.id.itemHome -> changeFragment(HomeFragment(), it.title.toString())
+                R.id.itemHome -> changeFragment(PopularMoviesFragment(), it.title.toString())
                 R.id.itemFavourite -> changeFragment(FavouriteFragment(), it.title.toString())
                 R.id.itemProfile -> changeFragment(ProfileFragment(), it.title.toString())
             }
@@ -64,5 +63,9 @@ class MainActivity : AppCompatActivity() {
         return title
     }
 
+
+    private fun setUpTabBar() {
+
+    }
 
 }
