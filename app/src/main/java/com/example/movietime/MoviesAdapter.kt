@@ -9,8 +9,9 @@ import com.bumptech.glide.Glide
 import com.example.movietime.dto.DataMovies
 
 class MoviesAdapter(
-    private var movies: List<DataMovies>
-) : RecyclerView.Adapter<MovieViewHolder>() {
+    private var movies: MutableList<DataMovies>,
+    private val onMovieClick: (movie: DataMovies) -> Unit
+) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view =
@@ -26,19 +27,21 @@ class MoviesAdapter(
         return movies.size
     }
 
-    fun updateMovies(movies: List<DataMovies>) {
-        this.movies = movies
-        notifyDataSetChanged()
+    fun appendMovies(movies: List<DataMovies>) {
+        this.movies.addAll(movies)
+        notifyItemRangeInserted(this.movies.size, movies.size - 1)
+    }
+
+
+    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val poster: ImageView = itemView.findViewById(R.id.itemMoviePoster)
+
+        fun bind(movie: DataMovies) {
+            Glide.with(itemView).load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
+                .centerCrop()
+                .into(poster)
+            itemView.setOnClickListener { onMovieClick.invoke(movie) }
+        }
     }
 
 }
-
-class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val poster: ImageView = itemView.findViewById(R.id.itemMoviePoster)
-
-    fun bind(movie: DataMovies) {
-        Glide.with(itemView).load("https://image.tmdb.org/t/p/w342${movie.posterPath}").centerCrop()
-            .into(poster)
-    }
-}
-
