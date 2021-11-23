@@ -18,10 +18,7 @@ class ProfileFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
@@ -29,7 +26,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
-        emailOut.text = firebaseAuth.currentUser?.email
+        getDataUser()
         signOutMethod()
         deleteAccount()
     }
@@ -54,7 +51,7 @@ class ProfileFragment : Fragment() {
                 if (it.isSuccessful) {
                     firebaseUser?.delete()?.addOnCompleteListener {
                         if (it.isSuccessful) {
-                            Toast.makeText(requireActivity(), "Account with ${firebaseUser?.email} has been deleted!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireActivity(), "Account with ${firebaseUser.email} has been deleted!", Toast.LENGTH_LONG).show()
                             val intent = Intent(activity, LoginActivity::class.java)
                             progressBarProfile.visibility = View.INVISIBLE
                             activity?.startActivity(intent)
@@ -69,6 +66,13 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun getDataUser() {
+        val firebaseUser = firebaseAuth.currentUser
+        profilePhoneNumber.text = firebaseUser?.phoneNumber
+        profileUsername.text = firebaseUser?.displayName
+        profileEmail.text = firebaseUser?.email
     }
 
 }

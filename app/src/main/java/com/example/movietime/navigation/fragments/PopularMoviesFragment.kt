@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movietime.*
@@ -14,6 +16,9 @@ import com.example.movietime.dto.DataMovies
 import com.example.movietime.retrofit.GuestSessionResponse
 import com.example.movietime.retrofit.MoviesRepository
 import com.example.movietime.retrofit.RatingResponse
+
+const val MOVIE_ID = "extra_movie_id"
+import com.google.android.gms.dynamic.SupportFragmentWrapper
 
 const val MOVIE_ID = "extra_movie_id"
 
@@ -54,6 +59,9 @@ class PopularMoviesFragment : Fragment() {
         return view
     }
 
+    // PopularMovies
+
+    private fun initRecyclerviewPopularMovies(view: View) {
     //GuestSession
 
     private fun getGuestSession() {
@@ -159,7 +167,7 @@ class PopularMoviesFragment : Fragment() {
         upcomingMovies = view.findViewById(R.id.recyclerViewUpcomingMovies)
         upcomingMoviesLayoutMgr = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
-        upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) {movie -> showMovieDetails(movie) }
+        upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
         upcomingMovies.adapter = upcomingMoviesAdapter
     }
 

@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.movietime.navigation.fragments.FavouriteFragment
+import com.example.movietime.navigation.fragments.watchlist.WatchListFragment
 import com.example.movietime.navigation.fragments.PopularMoviesFragment
 import com.example.movietime.navigation.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         //getNavUserData()
         initNavigationDrawer()
         navigationItemSelected()
-        //changeFragment(PopularMoviesFragment(), "Home")
+        changeFragment(PopularMoviesFragment(), "Home")
 
     }
 
