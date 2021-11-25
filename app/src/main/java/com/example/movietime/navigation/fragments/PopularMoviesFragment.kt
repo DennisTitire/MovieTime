@@ -11,20 +11,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movietime.*
 import com.example.movietime.dto.DataMovies
+import com.example.movietime.retrofit.GuestSessionResponse
 import com.example.movietime.retrofit.MoviesRepository
-import kotlinx.android.synthetic.main.fragment_popular_movies.*
+import com.example.movietime.retrofit.RatingResponse
+
+const val MOVIE_ID = "extra_movie_id"
 
 class PopularMoviesFragment : Fragment() {
 
+    //PopularMovies
     private lateinit var popularMovies: RecyclerView
     private lateinit var popularMoviesAdapter: MoviesAdapter
     private lateinit var popularMoviesLayoutMgr: LinearLayoutManager
     private var popularMoviesPage = 1
+
     //TopRatedMovies
     private lateinit var topRatedMovies: RecyclerView
     private lateinit var topRatedMoviesAdapter: MoviesAdapter
     private lateinit var topRatedMoviesLayoutMgr: LinearLayoutManager
     private var topRatedMoviesPage = 1
+
     //UpcomingMovies
     private lateinit var upcomingMovies: RecyclerView
     private lateinit var upcomingMoviesAdapter: MoviesAdapter
@@ -36,16 +42,39 @@ class PopularMoviesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_popular_movies, container, false)
-        initRecyclerview(view)
+        initRecyclerviewPopularMovies(view)
         initRecyclerviewTopRatedMovies(view)
         initRecyclerviewUpcomingMovies(view)
         getPopularMovies()
         getTopRatedMovies()
         getUpcomingMovies()
+        //getSearchMovies()
+        //getGuestSession()
+        postRating()
         return view
     }
 
-    private fun initRecyclerview(view: View) {
+    //GuestSession
+
+    private fun getGuestSession() {
+        GuestSessionResponse.getGuestResponse()
+    }
+
+//    private fun getSearchMovies() {
+//        MoviesRepository.getSearchMovies(
+//            popularMoviesPage,
+//            ::onPopularMovieFetched,
+//            ::onError
+//        )
+//    }
+
+    private fun postRating() {
+        RatingResponse.postResponse()
+    }
+
+    // PopularMovies
+
+    private fun initRecyclerviewPopularMovies(view: View) {
         popularMovies = view.findViewById(R.id.recyclerView)
         popularMoviesLayoutMgr = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         popularMovies.layoutManager = popularMoviesLayoutMgr
@@ -92,7 +121,7 @@ class PopularMoviesFragment : Fragment() {
         topRatedMovies = view.findViewById(R.id.recyclerViewTopRatedMovies)
         topRatedMoviesLayoutMgr = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
         topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
-        topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie)}
+        topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
         topRatedMovies.adapter = topRatedMoviesAdapter
     }
 
@@ -163,9 +192,9 @@ class PopularMoviesFragment : Fragment() {
     }
 
     // MovieDetails
-
     private fun showMovieDetails(movie: DataMovies) {
         val intent = Intent(activity, MovieDetails::class.java)
+        intent.putExtra(MOVIE_ID, movie.id)
         intent.putExtra(MOVIE_BACKDROP, movie.backdropPath)
         intent.putExtra(MOVIE_POSTER, movie.posterPath)
         intent.putExtra(MOVIE_TITLE, movie.title)
@@ -173,8 +202,5 @@ class PopularMoviesFragment : Fragment() {
         intent.putExtra(MOVIE_RELEASE_DATE, movie.releaseDate)
         intent.putExtra(MOVIE_OVERVIEW, movie.overview)
         startActivity(intent)
-
     }
-
-
 }
