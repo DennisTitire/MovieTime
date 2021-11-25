@@ -1,21 +1,15 @@
 package com.example.movietime
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.movietime.dto.DataUsers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_registration.*
-import kotlinx.android.synthetic.main.toolbar.*
-import kotlin.math.log
 
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
@@ -25,6 +19,8 @@ class RegistrationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_MovieTime)
         setContentView(R.layout.activity_registration)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         firebaseAuth = FirebaseAuth.getInstance()
         register()
@@ -66,10 +62,6 @@ class RegistrationActivity : AppCompatActivity() {
                     }
             }
         }
-    }
-
-    fun xButton(view: android.view.View) {
-        onBackPressed()
     }
 
 }

@@ -43,6 +43,8 @@ class MovieDetails : AppCompatActivity() {
         setTheme(R.style.Theme_MovieTime)
         setContentView(R.layout.activity_movie_details)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         backdrop = findViewById(R.id.movie_backdrop)
         poster = findViewById(R.id.movie_poster)
         title = findViewById(R.id.movie_title)

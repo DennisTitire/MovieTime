@@ -1,7 +1,10 @@
 package com.example.movietime
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -31,9 +34,13 @@ class MainActivity : AppCompatActivity() {
         //getNavUserData()
         initNavigationDrawer()
         navigationItemSelected()
-        //changeFragment(PopularMoviesFragment(), "Home")
 
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.action_bar_menu, menu)
+//        return true
+//    }
 
     private fun initNavigationDrawer() {
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -60,15 +67,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item))
             return true
-
         return onOptionsItemSelected(item)
-    }
-
-    private fun changeFragment(fragment: Fragment, title: String): String {
-        val fragmentManager = supportFragmentManager.beginTransaction()
-        fragmentManager.replace(R.id.frameLayout, fragment).commit()
-        supportActionBar?.title = title
-        return title
     }
 
     private fun showPopularMovies(title: String): String {
