@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movie Time</string>
+    <string name="title_activity_main">Acivitatea Principala</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Setari</string>
+
+    <string name="menu_home">Acasa</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie_time">Movie Time</string>
+    <string name="enter_email">Introduceti email-ul</string>
+    <string name="enter_password">Introduceti parola</string>
+    <string name="login">Logare</string>
+    <string name="signin">Inregistrare</string>
+    <string name="registration">Inregistrare Utilizator</string>
+    <string name="enter_username">Introduceti Numele de utilizator </string>
+    <string name="register">Inregistrare</string>
+    <string name="account_username_is">Conutul cu nemele de utilizator:</string>
+    <string name="account_email_is">Contul cu email-ul:</string>
+    <string name="logout">Delogare</string>
+    <string name="logo_image">logo image</string>
+    <string name="enter_user_name">Introduceti numele de utilizator</string>
+    <string name="enter_phone_number">Introduceti numarul de telefon</string>
+</resources>

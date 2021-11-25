@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/myYellow"
@@ -34,7 +35,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/emailInput"
+            android:id="@+id/emailInputLogIn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:autofillHints="emailAddress"
@@ -60,7 +61,7 @@
 
 
         <EditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/passwordInputLogIn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:autofillHints="password"
@@ -95,7 +96,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/signinButton"
+            android:id="@+id/signInButton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
@@ -103,6 +104,18 @@
             android:fontFamily="@font/staatliches_regular"
             android:text="@string/signin"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/what_app_uses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/staatliches_regular"
+            android:text="What app uses?"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
 
     </LinearLayout>
 
