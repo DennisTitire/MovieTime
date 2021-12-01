@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/design_default_color_primary">
+    android:background="@color/myGray">
 
     <ImageView
         android:id="@+id/imageNavigation"

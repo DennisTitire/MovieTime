@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movietime.*
 import com.example.movietime.dto.DataMovies
-import com.example.movietime.retrofit.GuestSessionResponse
 import com.example.movietime.retrofit.MoviesRepository
 import com.example.movietime.retrofit.RatingResponse
 
@@ -48,7 +47,6 @@ class PopularMoviesFragment : Fragment() {
         getPopularMovies()
         getTopRatedMovies()
         getUpcomingMovies()
-        //getSearchMovies()
         //getGuestSession()
         postRating()
         return view
@@ -56,16 +54,8 @@ class PopularMoviesFragment : Fragment() {
 
     //GuestSession
 
-    private fun getGuestSession() {
-        GuestSessionResponse.getGuestResponse()
-    }
-
-//    private fun getSearchMovies() {
-//        MoviesRepository.getSearchMovies(
-//            popularMoviesPage,
-//            ::onPopularMovieFetched,
-//            ::onError
-//        )
+//    private fun getGuestSession() {
+//        GuestSessionResponse.getGuestResponse()
 //    }
 
     private fun postRating() {

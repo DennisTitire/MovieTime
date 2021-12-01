@@ -23,12 +23,12 @@ interface Api {
         @Query("page") page: Int
     ):Call<GetMovieResponse>
 
-//    @GET("search/movie")
-//    fun getSearchMovies(
-//        @Query("api_key") apiKey: String,
-//        @Query("page") page: Int,
-//        @Query("query") queryValue: String
-//        ):Call<GetMovieResponse>
+    @GET("search/movie")
+    fun getSearchMovies(
+        @Query("api_key") apiKey: String = "37d2b486678462f6924f47bf9d520ffe",
+        @Query("page") page: Int,
+        @Query("query") queryValue: String
+        ):Call<GetSearchMovie>
 
     @GET("authentication/guest_session/new")
     fun getGuestSession(

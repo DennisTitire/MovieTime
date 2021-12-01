@@ -1,16 +1,20 @@
 package com.example.movietime
 
+import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
@@ -22,17 +26,26 @@ class LoginActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        lifecycleScope.launch {
+            if (NetworkHelper.isNetworkConnected(this@LoginActivity)) {
+                checkLogInUser()
+                login()
+            } else {
+                Snackbar.make(login_activity, "No network Connection!", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
         checkLogInUser()
         login()
     }
 
-    override fun onResume() {
-        checkInternetConnection()
-        super.onResume()
-    }
+//    override fun onResume() {
+//        checkInternetConnection()
+//        super.onResume()
+//    }
 
     override fun onStart() {
-        checkInternetConnection()
+        //checkInternetConnection()
         super.onStart()
     }
 
@@ -69,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
     private fun checkInternetConnection() {
         val loginActivity = findViewById<View>(R.id.login_activity)
         if (haveNetwork()) {
@@ -100,6 +114,4 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun checkForPermission(){}
-
-}
+    }
