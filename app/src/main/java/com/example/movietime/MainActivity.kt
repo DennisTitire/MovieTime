@@ -68,14 +68,14 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             // it.isChecked = true
             when (it.itemId) {
-                R.id.itemHome -> showPopularMovies("Popular Movies")
+                R.id.itemHome -> showPopularMovies("Home")
                 R.id.itemFavourite -> showWatchListMovies("Watch list")
                 R.id.itemProfile -> showProfile("Profile")
             }
             drawerLayout.closeDrawers()
             true
         }
-        showPopularMovies("Popular Movies")
+        showPopularMovies("Home")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -58,7 +58,7 @@ class RegistrationActivity : AppCompatActivity() {
                         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
                         databaseReference.child(uid!!).setValue(dataUser).addOnCompleteListener {
                             if (it.isSuccessful) {
-                                Toast.makeText(this@RegistrationActivity, "Registration Success with\n${emailInputRegistration.text}", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@RegistrationActivity, "Successfully registered with\n${emailInputRegistration.text}", Toast.LENGTH_LONG).show()
                                 progressBarRegistration.visibility = View.INVISIBLE
                                 finish()
                             } else {

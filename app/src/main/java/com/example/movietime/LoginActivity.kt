@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
             firebaseAuth.signInWithEmailAndPassword(emailInputLogIn.text.toString(), passwordInputLogIn.text.toString().trim()).addOnCompleteListener {
                     if (it.isSuccessful) {
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        Toast.makeText(this@LoginActivity, "Login Success with email\n${emailInputLogIn.text}", Toast.LENGTH_LONG)
+                        Toast.makeText(this@LoginActivity, "Successfully logged in with email\n${emailInputLogIn.text}", Toast.LENGTH_LONG)
                             .show()
                         finish()
                     } else {
@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
         } else {
             val builder = AlertDialog.Builder(this@LoginActivity)
             builder.setTitle("Movie Time")
-            builder.setMessage("To log in to the Movie Time app you will need to connect to the internet!")
+            builder.setMessage("In order to continue you need to connect to the internet!")
             builder.setPositiveButton("Continue") { dialogInterface, i -> onResume() }
             builder.setNegativeButton("Close the application") { dialogInterface, i -> finish() }
             builder.show()

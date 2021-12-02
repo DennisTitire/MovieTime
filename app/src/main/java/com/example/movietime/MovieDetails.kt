@@ -164,7 +164,7 @@ class MovieDetails : AppCompatActivity() {
                 Toast.makeText(applicationContext, "You are connected on WIFI", Toast.LENGTH_SHORT).show()
                 return true
             } else if (it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                Toast.makeText(applicationContext, "You are connected on MOBILE", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "You are connected on MOBILE DATA", Toast.LENGTH_SHORT).show()
                 return true
             } else {
                 Toast.makeText(applicationContext, "You are not connected to the internet", Toast.LENGTH_SHORT).show()

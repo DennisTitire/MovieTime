@@ -91,11 +91,11 @@ class PopularMoviesFragment : Fragment() {
     private fun onError() {
         textPopularMovies.text = ""
         textRatedMovies.text = ""
-        textUpcomingMovies.text = "You don' have internet connection!"
+        textUpcomingMovies.text = "Without an internet connection you can only view the watchlist."
         val builder = AlertDialog.Builder(this.requireActivity())
         builder.setCancelable(true)
         builder.setTitle("Movie Time")
-        builder.setMessage("Don't have access to internet, you can view the watch list!")
+        builder.setMessage("Can not access the movie database.")
         builder.setPositiveButton("Continue") { dialog, i -> dialog.cancel() }
         builder.setNegativeButton("Close the app") {dialog, i -> activity?.finish() }
         builder.show()
