@@ -1,18 +1,25 @@
 package com.example.movietime.navigation.fragments
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movietime.*
 import com.example.movietime.dto.DataMovies
 import com.example.movietime.retrofit.MoviesRepository
 import com.example.movietime.retrofit.RatingResponse
+import kotlinx.android.synthetic.main.activity_registration.*
+import kotlinx.android.synthetic.main.fragment_popular_movies.*
 
 const val MOVIE_ID = "extra_movie_id"
 
@@ -44,9 +51,12 @@ class PopularMoviesFragment : Fragment() {
         initRecyclerviewPopularMovies(view)
         initRecyclerviewTopRatedMovies(view)
         initRecyclerviewUpcomingMovies(view)
-        getPopularMovies()
-        getTopRatedMovies()
-        getUpcomingMovies()
+
+        lifecycleScope.launchWhenCreated {
+            getPopularMovies()
+            getTopRatedMovies()
+            getUpcomingMovies()
+        }
         //getGuestSession()
         postRating()
         return view
@@ -77,8 +87,19 @@ class PopularMoviesFragment : Fragment() {
         attachPopularMoviesOnScrollListener()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun onError() {
-        Toast.makeText(context, "Please check your internet connection!", Toast.LENGTH_LONG).show()
+        textPopularMovies.text = ""
+        textRatedMovies.text = ""
+        textUpcomingMovies.text = "You don' have internet connection!"
+        val builder = AlertDialog.Builder(this.requireActivity())
+        builder.setCancelable(true)
+        builder.setTitle("Movie Time")
+        builder.setMessage("Don't have access to internet, you can view the watch list!")
+        builder.setPositiveButton("Continue") { dialog, i -> dialog.cancel() }
+        builder.setNegativeButton("Close the app") {dialog, i -> activity?.finish() }
+        builder.show()
+        //Toast.makeText(context, "Don't have access to internet, you can view the watch list!", Toast.LENGTH_LONG).show()
     }
 
     private fun getPopularMovies() {

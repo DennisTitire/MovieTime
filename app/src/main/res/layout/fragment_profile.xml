@@ -37,7 +37,7 @@
             android:fontFamily="@font/staatliches_regular"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:text="Account user phone number is:"
+            android:text="User id is:"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -50,29 +50,6 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textViewUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/staatliches_regular"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
-            android:text="Account username is:"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/profileUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
 
         <Button
             android:id="@+id/logoutButton"

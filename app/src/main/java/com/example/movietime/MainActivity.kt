@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.movietime.navigation.fragments.PopularMoviesFragment
@@ -28,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         firebaseAuth = FirebaseAuth.getInstance()
-
         initNavigationDrawer()
         navigationItemSelected()
 
@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         val search: MenuItem? = menu?.findItem(R.id.navigationSearch)
         val searchView: SearchView = search?.actionView as SearchView
         searchView.queryHint = "Search for a movie"
-//        searchView.removeAllViews()
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
