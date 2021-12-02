@@ -10,6 +10,7 @@
         android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textPopularMovies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Popular Movies"
@@ -24,6 +25,7 @@
         android:layout_height="match_parent"/>
 
         <TextView
+            android:id="@+id/textRatedMovies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Top Rated Movies"
@@ -38,6 +40,7 @@
             android:layout_height="match_parent"/>
 
         <TextView
+            android:id="@+id/textUpcomingMovies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Upcoming Movies"

@@ -31,11 +31,6 @@ class LoginActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    override fun onStart() {
-        checkInternetConnection()
-        super.onStart()
-    }
-
     private fun checkLogInUser() {
         if (firebaseAuth.currentUser != null) {
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
@@ -53,11 +48,11 @@ class LoginActivity : AppCompatActivity() {
                 passwordInputLogIn.setError("Please enter password!")
                 return@setOnClickListener
             }
-            firebaseAuth.signInWithEmailAndPassword(emailInputLogIn.text.toString(), passwordInputLogIn.text.toString().trim())
-                .addOnCompleteListener {
+            firebaseAuth.signInWithEmailAndPassword(emailInputLogIn.text.toString(), passwordInputLogIn.text.toString().trim()).addOnCompleteListener {
                     if (it.isSuccessful) {
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "Login Success with email\n${emailInputLogIn.text}", Toast.LENGTH_LONG)
+                            .show()
                         finish()
                     } else {
                         Toast.makeText(this@LoginActivity, "Login failed, please try again!", Toast.LENGTH_LONG).show()
@@ -72,17 +67,18 @@ class LoginActivity : AppCompatActivity() {
     private fun checkInternetConnection() {
         val loginActivity = findViewById<View>(R.id.login_activity)
         if (haveNetwork()) {
-            Snackbar.make(loginActivity, "Found internet!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(loginActivity, "Found internet connection!", Snackbar.LENGTH_SHORT).show()
         } else {
             val builder = AlertDialog.Builder(this@LoginActivity)
             builder.setTitle("Movie Time")
-            builder.setMessage("To use the Movie Time app you will need to connect to the internet!")
-            builder.setPositiveButton("Try Again") {dialogInterface, i -> restartApp()}
-            builder.setNegativeButton("Okay") {dialogInterface, i -> finish()}
+            builder.setMessage("To log in to the Movie Time app you will need to connect to the internet!")
+            builder.setPositiveButton("Continue") { dialogInterface, i -> onResume() }
+            builder.setNegativeButton("Close the application") { dialogInterface, i -> finish() }
             builder.show()
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun haveNetwork(): Boolean {
         var haveWifi = false
         var haveMobile = false
@@ -94,12 +90,5 @@ class LoginActivity : AppCompatActivity() {
         }
         return haveMobile || haveWifi
     }
-
-    private fun restartApp() {
-        startActivity(Intent(applicationContext, LoginActivity::class.java))
-        finish()
-    }
-
-    private fun checkForPermission(){}
 
 }

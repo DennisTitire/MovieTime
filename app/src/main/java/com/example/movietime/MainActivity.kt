@@ -2,16 +2,14 @@ package com.example.movietime
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.movietime.navigation.fragments.watchlist.WatchListFragment
 import com.example.movietime.navigation.fragments.PopularMoviesFragment
 import com.example.movietime.navigation.fragments.ProfileFragment
+import com.example.movietime.navigation.fragments.watchlist.WatchListFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,8 +19,9 @@ private const val PROFILE_FRAGMENT = "profile_fragment"
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var firebaseAuth: FirebaseAuth
-    lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var toggle: ActionBarDrawerToggle
+    companion object { lateinit var searchTextValGlob: String }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +29,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         firebaseAuth = FirebaseAuth.getInstance()
-
-        //getNavUserData()
         initNavigationDrawer()
         navigationItemSelected()
 
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.action_bar_menu, menu)
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.action_bar_menu, menu)
+        val search: MenuItem? = menu?.findItem(R.id.navigationSearch)
+        val searchView: SearchView = search?.actionView as SearchView
+        searchView.queryHint = "Search for a movie"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val fragmentManager = supportFragmentManager
+                val fragmentTransition = fragmentManager.beginTransaction()
+                fragmentTransition.replace(R.id.frameLayout, SearchFragment()).commit()
+                searchTextValGlob = searchView.query.toString()
+                return true
+            }
+        })
+
+        return true
+    }
 
     private fun initNavigationDrawer() {
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -56,7 +71,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.itemHome -> showPopularMovies("Popular Movies")
                 R.id.itemFavourite -> showWatchListMovies("Watch list")
                 R.id.itemProfile -> showProfile("Profile")
-
             }
             drawerLayout.closeDrawers()
             true
@@ -67,10 +81,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item))
             return true
-        return onOptionsItemSelected(item)
+        return true
     }
 
-    private fun showPopularMovies(title: String): String {
+    private fun showPopularMovies(title: String) {
         val transaction = supportFragmentManager.beginTransaction()
         val fragment = supportFragmentManager.findFragmentByTag(POPULAR_MOVIES)
         val watchListFragment = supportFragmentManager.findFragmentByTag(WATCH_LIST_FRAGMENT)
@@ -85,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             transaction.show(fragment)
         }
         transaction.commit()
-        return title
+
     }
 
     private fun showWatchListMovies(title: String): String {

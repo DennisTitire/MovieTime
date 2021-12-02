@@ -1,7 +1,5 @@
 package com.example.movietime.retrofit
 
-import android.util.Log
-import com.example.movietime.dto.DataGuestSession
 import com.example.movietime.dto.DataMovies
 import retrofit2.Call
 import retrofit2.Callback
@@ -11,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object MoviesRepository {
 
-    val BASE_URL = "https://api.themoviedb.org/3/"
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
     private val api: Api
 
     init {
@@ -101,34 +99,4 @@ object MoviesRepository {
             }
         })
     }
-
-//    fun getSearchMovies(
-//        page: Int = 1,
-//        onSuccess: (movies: List<DataMovies>) -> Unit,
-//        onError: () -> Unit
-//    ) {
-//        api.getSearchMovies("37d2b486678462f6924f47bf9d520ffe", page = page, "Titanic").enqueue(object : Callback<GetMovieResponse> {
-//            override fun onResponse(
-//                call: Call<GetMovieResponse>,
-//                response: Response<GetMovieResponse>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val responseBody = response.body()
-//
-//                    Log.d("Search", "The search result is: ${response.body()}")
-//                    if (responseBody != null) {
-//                        onSuccess.invoke(responseBody.movies)
-//                    } else {
-//                        onError.invoke()
-//                    }
-//                } else {
-//                    onError.invoke()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<GetMovieResponse>, t: Throwable) {
-//                onError.invoke()
-//            }
-//        })
-//    }
 }

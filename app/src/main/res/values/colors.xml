@@ -13,6 +13,7 @@
     <color name="myRed">#eb244f</color>
     <color name="myBlue">#a4cbe5</color>
     <color name="myBlack">#100f0d</color>
+    <color name="myGray">#ED100F0D</color>
 
 
 </resources>

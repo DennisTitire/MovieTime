@@ -7,23 +7,25 @@
     android:orientation="vertical"
     tools:context=".RegistrationActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/staatliches_regular"
-        android:text="@string/registration"
-        android:textColor="@color/black"
-        android:textSize="30sp" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+              android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/staatliches_regular"
+            android:text="@string/registration"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/userNameRegistration"
@@ -39,7 +41,8 @@
             android:inputType="textPersonName"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:maxLength="15"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -56,6 +59,8 @@
             android:inputType="phone"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -71,6 +76,8 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/staatliches_regular"
             android:hint="@string/enter_email"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:inputType="textEmailAddress"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
@@ -88,28 +95,12 @@
             android:fontFamily="@font/staatliches_regular"
             android:hint="@string/enter_password"
             android:inputType="textPassword"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show Password"
-            android:textColor="@color/myBlack"
-            android:fontFamily="@font/staatliches_regular"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/progressBarRegistration"
@@ -123,12 +114,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
             android:background="@drawable/custom_button"
             android:fontFamily="@font/staatliches_regular"
             android:text="@string/register"
             android:textSize="20sp" />
 
+        </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

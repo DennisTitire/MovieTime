@@ -22,6 +22,7 @@ class WatchListAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
         holder.bind(items[position])
     }
