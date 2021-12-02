@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.movietime.*
 import com.example.movietime.navigation.fragments.roomwatchlist.AppDatabase
+import kotlinx.coroutines.launch
 
 class WatchListFragment : Fragment() {
 
@@ -30,7 +32,10 @@ class WatchListFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_watch_list, container, false)
         initWatchList(view)
-        getWatchList()
+
+        lifecycleScope.launch {
+            getWatchList()
+        }
 
         return view
     }
@@ -44,21 +49,23 @@ class WatchListFragment : Fragment() {
 
     override fun onHiddenChanged(hidden: Boolean) {
         if (!hidden) {
-            getWatchList()
+            lifecycleScope.launch {
+                getWatchList()
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        getWatchList()
+        lifecycleScope.launch {
+            getWatchList()
+        }
     }
 
     private fun getWatchList() {
         val movies = db.movieDao().getAll()
         val watchList = mutableListOf<WatchList>()
-        watchList.addAll(
-            movies.map { movie ->
-                WatchList(
+        watchList.addAll(movies.map { movie -> WatchList(
                     movie.id, movie.title, movie.overview, movie.posterPath, movie.backdropPath,
                     movie.rating, movie.releaseDate, WatchListType.MovieType
                 )

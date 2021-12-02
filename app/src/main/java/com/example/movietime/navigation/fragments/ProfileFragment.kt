@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.movietime.LoginActivity
@@ -15,8 +16,11 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
+
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var profileEmail: TextView
+    private lateinit var profilePhoneNumber: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -26,6 +30,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
+        profileEmail = view.findViewById(R.id.profileEmail)
+        profilePhoneNumber = view.findViewById(R.id.profilePhoneNumber)
         getDataUser()
         signOutMethod()
         deleteAccount()
@@ -70,9 +76,10 @@ class ProfileFragment : Fragment() {
 
     private fun getDataUser() {
         val firebaseUser = firebaseAuth.currentUser
-        profilePhoneNumber.text = firebaseUser?.phoneNumber
-        profileUsername.text = firebaseUser?.displayName
-        profileEmail.text = firebaseUser?.email
+        if (firebaseUser != null) {
+            profileEmail.text = firebaseUser.email
+            profilePhoneNumber.text = firebaseUser.uid
+        }
     }
 
 }

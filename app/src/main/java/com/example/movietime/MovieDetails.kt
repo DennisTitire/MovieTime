@@ -1,5 +1,10 @@
 package com.example.movietime
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
@@ -8,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movietime.navigation.fragments.roomwatchlist.AppDatabase
 import com.example.movietime.navigation.fragments.roomwatchlist.MovieEntity
+import kotlinx.android.synthetic.main.activity_movie_details.*
 
 const val MOVIE_BACKDROP = "extra_movie_backdrop"
 const val MOVIE_POSTER = "extra_movie_poster"
@@ -60,6 +66,8 @@ class MovieDetails : AppCompatActivity() {
             finish()
         }
 
+        checkInternetConnection()
+
     }
 
     override fun onStart() {
@@ -109,7 +117,8 @@ class MovieDetails : AppCompatActivity() {
             .into(backdrop)
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w342$moviePoster")
-            .transform(CenterCrop()).into(poster)
+            .transform(CenterCrop())
+            .into(poster)
 
         title.text = movieTitle
         rating.rating = movieRating / 2
@@ -123,6 +132,46 @@ class MovieDetails : AppCompatActivity() {
         } else {
             addToWatchList.text = getString(R.string.remove_from_watch_list)
         }
+    }
+
+    private fun checkInternetConnection() {
+        checkInternetConnection.setOnClickListener {
+            isNetworkConnected(applicationContext)
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    fun isNetworkConnected(context: Context): Boolean {
+        var result = false
+        (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                result = checkNetworkConnection(this, this.activeNetwork)
+            } else {
+                val networks = this.allNetworks
+                for (network in networks) {
+                    if (checkNetworkConnection(this, network)) {
+                        result = true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    private fun checkNetworkConnection(connectivityManager: ConnectivityManager, network: Network?): Boolean {
+        connectivityManager.getNetworkCapabilities(network)?.also {
+            if (it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                Toast.makeText(applicationContext, "You are connected on WIFI", Toast.LENGTH_SHORT).show()
+                return true
+            } else if (it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                Toast.makeText(applicationContext, "You are connected on MOBILE", Toast.LENGTH_SHORT).show()
+                return true
+            } else {
+                Toast.makeText(applicationContext, "You are not connected to the internet", Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+        return false
     }
 
 }
