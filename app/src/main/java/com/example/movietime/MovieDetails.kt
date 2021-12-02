@@ -74,15 +74,7 @@ class MovieDetails : AppCompatActivity() {
         super.onStart()
         addToWatchList.setOnClickListener {
             if (getMovie(movieId) == null) {
-                val entity = MovieEntity(
-                    movieId,
-                    movieTitle,
-                    movieOverview,
-                    moviePoster,
-                    movieBackdrop,
-                    movieRating,
-                    movieReleaseDate
-                )
+                val entity = MovieEntity(movieId, movieTitle, movieOverview, moviePoster, movieBackdrop, movieRating, movieReleaseDate)
                 db.movieDao().insert(entity)
                 addToWatchList.text = getString(R.string.remove_from_watch_list)
             } else {
@@ -94,8 +86,7 @@ class MovieDetails : AppCompatActivity() {
     }
 
     private val db: AppDatabase by lazy {
-        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "movies.db")
-            .allowMainThreadQueries().build()
+        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "movies.db").allowMainThreadQueries().build()
     }
 
     private fun getMovie(id: Long): MovieEntity? {

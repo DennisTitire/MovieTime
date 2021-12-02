@@ -21,17 +21,11 @@ object SearchRepository {
 
         api = retrofit.create(Api::class.java)
     }
-        fun getSearchMovies(
-            page: Int = 1,
-            queryValue: String,
-            onSuccess: (movies: List<DataMovies>) -> Unit,
-            onError: () -> Unit
-    ) {
+        fun getSearchMovies(page: Int = 1, queryValue: String, onSuccess: (movies: List<DataMovies>) -> Unit, onError: () -> Unit) {
             api.getSearchMovies(page = page, queryValue = queryValue).enqueue(object : Callback<GetSearchMovie> {
             override fun onResponse(call: Call<GetSearchMovie>, response: Response<GetSearchMovie>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-
                     Log.d("Search", "The search result is: ${response.body()}")
                     if (responseBody != null) {
                         onSuccess.invoke(responseBody.movies)

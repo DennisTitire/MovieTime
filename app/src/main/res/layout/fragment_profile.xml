@@ -37,7 +37,7 @@
             android:fontFamily="@font/staatliches_regular"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:text="User id is:"
+            android:text="@string/user_id_is"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

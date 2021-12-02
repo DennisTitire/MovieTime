@@ -15,9 +15,7 @@ class WatchListAdapter(
 ) : RecyclerView.Adapter<WatchListAdapter.WatchListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.item_watch_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_watch_list, parent, false)
         return WatchListHolder(view)
     }
 

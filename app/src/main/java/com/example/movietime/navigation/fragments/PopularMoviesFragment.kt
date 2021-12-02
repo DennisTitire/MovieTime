@@ -1,15 +1,12 @@
 package com.example.movietime.navigation.fragments
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movietime.*
 import com.example.movietime.dto.DataMovies
 import com.example.movietime.retrofit.MoviesRepository
-import com.example.movietime.retrofit.RatingResponse
-import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
 
 const val MOVIE_ID = "extra_movie_id"
@@ -57,19 +52,8 @@ class PopularMoviesFragment : Fragment() {
             getTopRatedMovies()
             getUpcomingMovies()
         }
-        //getGuestSession()
-        postRating()
+
         return view
-    }
-
-    //GuestSession
-
-//    private fun getGuestSession() {
-//        GuestSessionResponse.getGuestResponse()
-//    }
-
-    private fun postRating() {
-        RatingResponse.postResponse()
     }
 
     // PopularMovies
@@ -99,7 +83,6 @@ class PopularMoviesFragment : Fragment() {
         builder.setPositiveButton("Continue") { dialog, i -> dialog.cancel() }
         builder.setNegativeButton("Close the app") {dialog, i -> activity?.finish() }
         builder.show()
-        //Toast.makeText(context, "Don't have access to internet, you can view the watch list!", Toast.LENGTH_LONG).show()
     }
 
     private fun getPopularMovies() {
@@ -116,7 +99,6 @@ class PopularMoviesFragment : Fragment() {
                 val totalItemCount = popularMoviesLayoutMgr.itemCount
                 val visibleItemCount = popularMoviesLayoutMgr.childCount
                 val firstVisibleItem = popularMoviesLayoutMgr.findFirstVisibleItemPosition()
-
                 if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
                     popularMovies.removeOnScrollListener(this)
                     popularMoviesPage++

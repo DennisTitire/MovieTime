@@ -30,4 +30,11 @@
     <string name="logo_image">logo image</string>
     <string name="enter_user_name">Voer gebruikersnaam in</string>
     <string name="enter_phone_number">Voer telefoonnummer in</string>
+
+    <string name="delete_account">Delete Account</string>
+    <string name="add_to_watch_list">Add to Watchlist</string>
+    <string name="remove_from_watch_list">Remove from Watchlist</string>
+    <string name="movieBackDrop">movieBackDrop</string>
+    <string name="moviePoster">moviePoster</string>
+    <string name="not_have_internet">You don"'"t have internet connection!</string>
 </resources>

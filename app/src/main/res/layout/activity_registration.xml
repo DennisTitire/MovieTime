@@ -97,7 +97,7 @@
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show Password"
+            android:text="@string/show_password"
             android:textColor="@color/myBlack"
             android:fontFamily="@font/staatliches_regular"/>
 

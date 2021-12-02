@@ -30,4 +30,10 @@
     <string name="logo_image">logo image</string>
     <string name="enter_user_name">Introduceti numele de utilizator</string>
     <string name="enter_phone_number">Introduceti numarul de telefon</string>
+    <string name="delete_account">Sterge cont</string>
+    <string name="add_to_watch_list">Adauga la favorite</string>
+    <string name="remove_from_watch_list">Sterge din favorite</string>
+    <string name="movieBackDrop">movieBackDrop</string>
+    <string name="moviePoster">moviePoster</string>
+    <string name="not_have_internet">Nu ai conexiune la internet</string>
 </resources>

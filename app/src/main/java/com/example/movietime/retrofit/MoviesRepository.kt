@@ -21,13 +21,9 @@ object MoviesRepository {
         api = retrofit.create(Api::class.java)
     }
 
-    //GuestResponse
+    //PopularMovies
 
-    fun getPopularMovies(
-        page: Int  = 1,
-        onSuccess: (movies: List<DataMovies>) -> Unit,
-        onError: () -> Unit
-    ) {
+    fun getPopularMovies(page: Int  = 1, onSuccess: (movies: List<DataMovies>) -> Unit, onError: () -> Unit) {
         api.getPopularMovies(page = page).enqueue(object : Callback<GetMovieResponse> {
             override fun onResponse(call: Call<GetMovieResponse>, response: Response<GetMovieResponse>) {
                 if (response.isSuccessful) {
@@ -48,16 +44,11 @@ object MoviesRepository {
 
     //TopRatedMovies
 
-    fun getTopRatedMovies(
-        page: Int = 1,
-        onSuccess: (movies: List<DataMovies>) -> Unit,
-        onError: () -> Unit
-    ) {
+    fun getTopRatedMovies(page: Int = 1, onSuccess: (movies: List<DataMovies>) -> Unit, onError: () -> Unit) {
         api.getTopRatedMovies(page = page).enqueue(object : Callback<GetMovieResponse> {
             override fun onResponse(call: Call<GetMovieResponse>, response: Response<GetMovieResponse>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-
                     if (responseBody != null) {
                         onSuccess.invoke(responseBody.movies)
                         } else {
@@ -67,23 +58,17 @@ object MoviesRepository {
                     onError.invoke()
                 }
             }
-
             override fun onFailure(call: Call<GetMovieResponse>, t: Throwable) {
                 onError.invoke()
             }
         })
     }
 
-    fun getUpcomingMovies(
-        page: Int = 1,
-        onSuccess: (movies: List<DataMovies>) -> Unit,
-        onError: () -> Unit
-    ) {
+    fun getUpcomingMovies(page: Int = 1, onSuccess: (movies: List<DataMovies>) -> Unit, onError: () -> Unit) {
         api.getUpcomingMovies(page = page).enqueue(object : Callback<GetMovieResponse> {
             override fun onResponse(call: Call<GetMovieResponse>, response: Response<GetMovieResponse>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-
                     if (responseBody != null) {
                         onSuccess.invoke(responseBody.movies)
                     } else {
