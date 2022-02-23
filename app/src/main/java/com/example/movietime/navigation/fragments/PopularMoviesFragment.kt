@@ -11,6 +11,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +47,13 @@ class PopularMoviesFragment : Fragment() {
     private lateinit var upcomingMoviesLayoutMgr: LinearLayoutManager
     private var upcomingMoviesPage = 1
 
+    lateinit var viewModel: MoviesViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this.requireActivity())[MoviesViewModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,14 +63,31 @@ class PopularMoviesFragment : Fragment() {
         initRecyclerviewTopRatedMovies(view)
         initRecyclerviewUpcomingMovies(view)
 
-        lifecycleScope.launchWhenCreated {
-            getPopularMovies()
-            getTopRatedMovies()
-            getUpcomingMovies()
-        }
         //getGuestSession()
-        postRating()
+       // postRating()
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.popularMovies.observe(viewLifecycleOwner, Observer { movies ->
+            popularMoviesAdapter.appendMovies(movies)
+            attachPopularMoviesOnScrollListener()
+        })
+
+        viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { movies ->
+            topRatedMoviesAdapter.appendMovies(movies)
+            attachTopRatedMoviesOnScrollListener()
+        })
+
+        viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer { movies ->
+            upcomingMoviesAdapter.appendMovies(movies)
+            attachUpcomingMoviesOnScrollListener()
+        })
+
+        viewModel.error.observe(viewLifecycleOwner, Observer { onError() })
+
     }
 
     //GuestSession
@@ -82,9 +110,66 @@ class PopularMoviesFragment : Fragment() {
         popularMovies.adapter = popularMoviesAdapter
     }
 
-    private fun onPopularMovieFetched(movies: List<DataMovies>) {
-        popularMoviesAdapter.appendMovies(movies)
-        attachPopularMoviesOnScrollListener()
+    private fun initRecyclerviewTopRatedMovies(view: View) {
+        topRatedMovies = view.findViewById(R.id.recyclerViewTopRatedMovies)
+        topRatedMoviesLayoutMgr = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
+        topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        topRatedMovies.adapter = topRatedMoviesAdapter
+    }
+
+    private fun initRecyclerviewUpcomingMovies(view: View) {
+        upcomingMovies = view.findViewById(R.id.recyclerViewUpcomingMovies)
+        upcomingMoviesLayoutMgr = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
+        upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        upcomingMovies.adapter = upcomingMoviesAdapter
+    }
+
+    private fun attachPopularMoviesOnScrollListener() {
+        popularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = popularMoviesLayoutMgr.itemCount
+                val visibleItemCount = popularMoviesLayoutMgr.childCount
+                val firstVisibleItem = popularMoviesLayoutMgr.findFirstVisibleItemPosition()
+
+                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
+                    popularMovies.removeOnScrollListener(this)
+                    popularMoviesPage++
+                    viewModel.getPopularMovies(popularMoviesPage)
+                }
+            }
+        })
+    }
+
+    private fun attachTopRatedMoviesOnScrollListener() {
+        topRatedMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = topRatedMoviesLayoutMgr.itemCount
+                val visibleItemCount = topRatedMoviesLayoutMgr.childCount
+                val firstVisibleItem = topRatedMoviesLayoutMgr.findFirstVisibleItemPosition()
+                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
+                    topRatedMovies.removeOnScrollListener(this)
+                    topRatedMoviesPage++
+                    viewModel.getTopRatedMovies(topRatedMoviesPage)
+                }
+            }
+        })
+    }
+
+    private fun attachUpcomingMoviesOnScrollListener() {
+        upcomingMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = upcomingMoviesLayoutMgr.itemCount
+                val visibleItemCount = upcomingMoviesLayoutMgr.childCount
+                val firstVisibleItem = upcomingMoviesLayoutMgr.findFirstVisibleItemPosition()
+                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
+                    upcomingMovies.removeOnScrollListener(this)
+                    upcomingMoviesPage++
+                    viewModel.getUpcomingMovies(upcomingMoviesPage)
+                }
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")
@@ -100,106 +185,6 @@ class PopularMoviesFragment : Fragment() {
         builder.setNegativeButton("Close the app") {dialog, i -> activity?.finish() }
         builder.show()
         //Toast.makeText(context, "Don't have access to internet, you can view the watch list!", Toast.LENGTH_LONG).show()
-    }
-
-    private fun getPopularMovies() {
-        MoviesRepository.getPopularMovies(
-            popularMoviesPage,
-            ::onPopularMovieFetched,
-            ::onError
-        )
-    }
-
-    private fun attachPopularMoviesOnScrollListener() {
-        popularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val totalItemCount = popularMoviesLayoutMgr.itemCount
-                val visibleItemCount = popularMoviesLayoutMgr.childCount
-                val firstVisibleItem = popularMoviesLayoutMgr.findFirstVisibleItemPosition()
-
-                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
-                    popularMovies.removeOnScrollListener(this)
-                    popularMoviesPage++
-                    getPopularMovies()
-                }
-            }
-        })
-    }
-
-    // TopRatedMovies
-
-    private fun initRecyclerviewTopRatedMovies(view: View) {
-        topRatedMovies = view.findViewById(R.id.recyclerViewTopRatedMovies)
-        topRatedMoviesLayoutMgr = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-        topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
-        topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
-        topRatedMovies.adapter = topRatedMoviesAdapter
-    }
-
-    private fun getTopRatedMovies() {
-        MoviesRepository.getTopRatedMovies(
-            topRatedMoviesPage,
-            ::onTopRatedMoviesFetched,
-            ::onError
-        )
-    }
-
-    private fun onTopRatedMoviesFetched(movies: List<DataMovies>) {
-        topRatedMoviesAdapter.appendMovies(movies)
-        attachTopRatedMoviesOnScrollListener()
-    }
-
-    private fun attachTopRatedMoviesOnScrollListener() {
-        topRatedMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val totalItemCount = topRatedMoviesLayoutMgr.itemCount
-                val visibleItemCount = topRatedMoviesLayoutMgr.childCount
-                val firstVisibleItem = topRatedMoviesLayoutMgr.findFirstVisibleItemPosition()
-                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
-                    topRatedMovies.removeOnScrollListener(this)
-                    topRatedMoviesPage++
-                    getTopRatedMovies()
-                }
-            }
-        })
-    }
-
-    // UpcomingMovies
-
-    private fun initRecyclerviewUpcomingMovies(view: View) {
-        upcomingMovies = view.findViewById(R.id.recyclerViewUpcomingMovies)
-        upcomingMoviesLayoutMgr = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-        upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
-        upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
-        upcomingMovies.adapter = upcomingMoviesAdapter
-    }
-
-    private fun getUpcomingMovies() {
-        MoviesRepository.getUpcomingMovies(
-            upcomingMoviesPage,
-            ::onUpcomingMoviesFetched,
-            ::onError
-        )
-    }
-
-    private fun onUpcomingMoviesFetched(movies: List<DataMovies>) {
-        upcomingMoviesAdapter.appendMovies(movies)
-        attachUpcomingMoviesOnScrollListener()
-    }
-
-    private fun attachUpcomingMoviesOnScrollListener() {
-        upcomingMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val totalItemCount = upcomingMoviesLayoutMgr.itemCount
-                val visibleItemCount = upcomingMoviesLayoutMgr.childCount
-                val firstVisibleItem = upcomingMoviesLayoutMgr.findFirstVisibleItemPosition()
-                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
-                    upcomingMovies.removeOnScrollListener(this)
-                    upcomingMoviesPage++
-                    getUpcomingMovies()
-                }
-            }
-        })
     }
 
     // MovieDetails
